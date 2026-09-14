@@ -1,25 +1,27 @@
-# ЧТЕНИЕ СТАТИЧНЫХ ДАННЫХ
 from pyspark.sql import SparkSession
 
+from config import (
+    POSTGRES_PACKAGE,
+    POSTGRES_SOURCE_PASSWORD,
+    POSTGRES_SOURCE_TABLE,
+    POSTGRES_SOURCE_URL,
+    POSTGRES_SOURCE_USER,
+)
 
-spark_jars_packages = ("org.postgresql:postgresql:42.4.0")
-
-spark = SparkSession.builder \
-    .appName("Postgres-read-test") \
-    .config('spark.jars.packages', spark_jars_packages) \
+spark = (
+    SparkSession.builder.appName("Postgres-read-test")
+    .config("spark.jars.packages", POSTGRES_PACKAGE)
     .getOrCreate()
+)
 
-postgresql_setting = {
-    'user': 'student',
-    'password': 'de-student'
-}
-
-subscribers_restaurant_df = spark.read \
-    .format("jdbc") \
-    .option("url", "jdbc:postgresql://rc1a-fswjkpli01zafgjm.mdb.yandexcloud.net:6432/de") \
-    .option("driver", "org.postgresql.Driver") \
-    .option("dbtable", "subscribers_restaurants") \
-    .options(**postgresql_setting) \
+subscribers_restaurant_df = (
+    spark.read.format("jdbc")
+    .option("url", POSTGRES_SOURCE_URL)
+    .option("driver", "org.postgresql.Driver")
+    .option("dbtable", POSTGRES_SOURCE_TABLE)
+    .option("user", POSTGRES_SOURCE_USER)
+    .option("password", POSTGRES_SOURCE_PASSWORD)
     .load()
+)
 
 subscribers_restaurant_df.show()
