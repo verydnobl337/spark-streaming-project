@@ -1,10 +1,8 @@
 # Spark Streaming Project
 
-## Description
+## Описание
 
 Streaming-пайплайн на PySpark Structured Streaming, который читает ресторанные рекламные события из Kafka, сопоставляет их с подписками пользователей в PostgreSQL и формирует персонализированные триггеры. Обработанные события записываются в PostgreSQL для обратной связи и одновременно публикуются в выходной Kafka topic.
-
-**Tags:** `PySpark` `Spark Structured Streaming` `Apache Kafka` `PostgreSQL` `JDBC` `Python` `Streaming ETL` `Real-time Data Processing`
 
 ## Архитектура
 
